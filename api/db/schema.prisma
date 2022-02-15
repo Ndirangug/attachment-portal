@@ -1,0 +1,135 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+model User {
+  id                  String               @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  email               String               @unique
+  role                Role                 @default(STUDENT)
+  createdAt           DateTime             @default(now())
+  hashedPassword      String // <─┐
+  salt                String // <─┼─ add these lines
+  resetToken          String? // <─┤
+  resetTokenExpiresAt DateTime? // <─┘
+  student             Student?
+  company             Company?
+  industrySupervisor  IndustrySupervisor[]
+  schoolSupervisor    SchoolSupervisor[]
+}
+
+enum Role {
+  STUDENT
+  SCHOOL_SUPERVISOR
+  INDUSTRY_SUPERVISOR
+  RECRUITER
+  SCHOOL_ADMIN
+}
+
+model Student {
+  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  course         String
+  aboutMe        String
+  skills         String[]
+  experience     Json // [{company: String, position: String, description: String, startDate: Date, endDate: Date}]
+  education      Json // [{institution: String, qualification: String, startDate: Date, endDate: Date}]
+  user           User           @relation(fields: [userId], references: [id])
+  userId         String         @unique @db.ObjectId
+  applications   Application[]
+  logbookEntries LogbookEntry[]
+}
+
+model Company {
+  id                  String               @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name                String
+  bio                 String
+  industry            String
+  photo               String
+  location            String
+  user                User                 @relation(fields: [userId], references: [id])
+  userId              String               @unique @db.ObjectId
+  industrySupervisors IndustrySupervisor[]
+  opportunities       Opportunity[]
+}
+
+model IndustrySupervisor {
+  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  user           User           @relation(fields: [userId], references: [id])
+  userId         String         @db.ObjectId
+  company        Company        @relation(fields: [companyId], references: [id])
+  companyId      String         @db.ObjectId
+  logbookEntries LogbookEntry[]
+}
+
+model SchoolSupervisor {
+  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  user           User           @relation(fields: [userId], references: [id])
+  userId         String         @db.ObjectId
+  logbookEntries LogbookEntry[]
+}
+
+model Opportunity {
+  id               String        @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  title            String
+  createdAt        DateTime      @default(now())
+  compnsation      Int
+  jobDescription   String
+  requirements     String[]
+  details          Json
+  location         String
+  skillsRequired   String[]
+  skillsPrefferred String[]
+  industry         String
+  company          Company       @relation(fields: [companyId], references: [id])
+  companyId        String        @db.ObjectId
+  applications     Application[]
+}
+
+model Application {
+  id            String            @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status        ApplicationStatus @default(PENDING)
+  createdAt     DateTime          @default(now())
+  student       Student           @relation(fields: [studentId], references: [id])
+  studentId     String            @db.ObjectId
+  opportunity   Opportunity       @relation(fields: [opportunityId], references: [id])
+  opportunityId String            @db.ObjectId
+  Placement     Placement?
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Placement {
+  id            String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  createdAt     DateTime    @default(now())
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String      @unique @db.ObjectId
+}
+
+model LogbookEntry {
+  id                         String             @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  date                       DateTime           @default(now())
+  student                    Student            @relation(fields: [studentId], references: [id])
+  studentId                  String             @db.ObjectId
+  studentComments            String
+  schoolSupervisorComments   String
+  industrySupervisorComments String
+  industrySupervisor         IndustrySupervisor @relation(fields: [industrySupervisorId], references: [id])
+  industrySupervisorId       String             @db.ObjectId
+  schoolSupervisor           SchoolSupervisor   @relation(fields: [schoolSupervisorId], references: [id])
+  schoolSupervisorId         String             @db.ObjectId
+}
