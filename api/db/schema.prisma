@@ -35,6 +35,11 @@ model Student {
   id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
   firstName      String
   lastName       String
+  title          String
+  linkedinUrl    String?
+  githubUrl      String?
+  twitterUrl     String?
+  city           String
   course         String
   aboutMe        String
   skills         String[]

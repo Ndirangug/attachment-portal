@@ -1,4 +1,4 @@
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { useRef } from 'react'
 import {
   Form,
@@ -12,13 +12,28 @@ import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 import { useEffect } from 'react'
+import { setRole, RoutesAndRoles } from 'src/lib/rolesAndRoutes'
+import { Role } from 'types/graphql'
 
 const SignupPage = () => {
-  const { isAuthenticated, signUp } = useAuth()
+  const { isAuthenticated, signUp, hasRole, logOut } = useAuth()
+  const { search } = useLocation()
+  const redirectTo = new URLSearchParams(search).get('redirectTo')
+  const role: Role = setRole(redirectTo)
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      {
+        // if (hasRole(RoutesAndRoles[redirectTo])) {
+        //   navigate(redirectTo)
+        // } else {
+        //   toast.error(
+        //     'You do not have permission to access this page.Redirecting you to login...'
+        //   )
+        //   //logOut()
+        // }
+        navigate(redirectTo)
+      }
     }
   }, [isAuthenticated])
 
@@ -29,15 +44,21 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data) => {
-    const response = await signUp({ ...data })
+    const response = await signUp({ ...data, role })
 
     if (response.message) {
       toast(response.message)
     } else if (response.error) {
       toast.error(response.error)
     } else {
-      // user is signed in automatically
-      toast.success('Welcome!')
+      if (hasRole(RoutesAndRoles[redirectTo])) {
+        toast.success('Welcome!')
+      } //else {
+      //   toast.error(
+      //     'You do not have permission to access this page.Redirecting you to login...'
+      //   )
+      //   logOut()
+      // }
     }
   }
 
@@ -99,7 +120,9 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Sign Up</Submit>
+                    <Submit className="rw-button rw-button-blue">
+                      Sign Up
+                    </Submit>
                   </div>
                 </Form>
               </div>

@@ -1,4 +1,4 @@
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { useRef } from 'react'
 import {
   Form,
@@ -12,13 +12,24 @@ import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 import { useEffect } from 'react'
+import { RoutesAndRoles } from 'src/lib/rolesAndRoutes'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn } = useAuth()
+  const { isAuthenticated, logIn, hasRole, logOut } = useAuth()
+  const { search } = useLocation()
+  const redirectTo = new URLSearchParams(search).get('redirectTo')
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      // if (hasRole(RoutesAndRoles[redirectTo])) {
+      //   navigate(redirectTo)
+      // } else {
+      //   toast.error(
+      //     'You do not have permission to access this page.Redirecting you to login...'
+      //   )
+      //   logOut()
+      // }
+      navigate(redirectTo)
     }
   }, [isAuthenticated])
 
@@ -97,7 +108,10 @@ const LoginPage = () => {
                   />
 
                   <div className="rw-forgot-link">
-                    <Link to={routes.forgotPassword()} className="rw-forgot-link">
+                    <Link
+                      to={routes.forgotPassword()}
+                      className="rw-forgot-link"
+                    >
                       Forgot Password?
                     </Link>
                   </div>
@@ -113,7 +127,10 @@ const LoginPage = () => {
           </div>
           <div className="rw-login-link">
             <span>Don&apos;t have an account?</span>{' '}
-            <Link to={routes.signup()} className="rw-link">
+            <Link
+              to={routes.signup({ redirectTo: redirectTo })}
+              className="rw-link"
+            >
               Sign up!
             </Link>
           </div>

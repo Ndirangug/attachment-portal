@@ -6,6 +6,7 @@ export const standard = defineScenario<Prisma.StudentCreateArgs>({
       data: {
         firstName: 'String',
         lastName: 'String',
+        title: 'String',
         course: 'String',
         aboutMe: 'String',
         skills: 'String',
@@ -13,7 +14,7 @@ export const standard = defineScenario<Prisma.StudentCreateArgs>({
         education: { foo: 'bar' },
         user: {
           create: {
-            email: 'String2594286',
+            email: 'String8399244',
             hashedPassword: 'String',
             salt: 'String',
           },
@@ -24,6 +25,7 @@ export const standard = defineScenario<Prisma.StudentCreateArgs>({
       data: {
         firstName: 'String',
         lastName: 'String',
+        title: 'String',
         course: 'String',
         aboutMe: 'String',
         skills: 'String',
@@ -31,7 +33,7 @@ export const standard = defineScenario<Prisma.StudentCreateArgs>({
         education: { foo: 'bar' },
         user: {
           create: {
-            email: 'String4707273',
+            email: 'String9279654',
             hashedPassword: 'String',
             salt: 'String',
           },

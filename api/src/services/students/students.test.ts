@@ -31,6 +31,7 @@ describe('students', () => {
       input: {
         firstName: 'String',
         lastName: 'String',
+        title: 'String',
         course: 'String',
         aboutMe: 'String',
         skills: 'String',
@@ -42,6 +43,7 @@ describe('students', () => {
 
     expect(result.firstName).toEqual('String')
     expect(result.lastName).toEqual('String')
+    expect(result.title).toEqual('String')
     expect(result.course).toEqual('String')
     expect(result.aboutMe).toEqual('String')
     expect(result.skills).toEqual('String')

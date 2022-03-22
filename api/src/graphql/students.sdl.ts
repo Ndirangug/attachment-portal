@@ -3,7 +3,12 @@ export const schema = gql`
     id: String!
     firstName: String!
     lastName: String!
+    title: String!
+    linkedinUrl: String
+    githubUrl: String
+    twitterUrl: String
     course: String!
+    city: String!
     aboutMe: String!
     skills: [String]!
     experience: JSON!
@@ -22,7 +27,12 @@ export const schema = gql`
   input CreateStudentInput {
     firstName: String!
     lastName: String!
+    title: String!
+    linkedinUrl: String
+    githubUrl: String
+    twitterUrl: String
     course: String!
+    city: String!
     aboutMe: String!
     skills: [String]!
     experience: JSON!
@@ -33,6 +43,11 @@ export const schema = gql`
   input UpdateStudentInput {
     firstName: String
     lastName: String
+    title: String
+    linkedinUrl: String
+    githubUrl: String
+    twitterUrl: String
+    city: String!
     course: String
     aboutMe: String
     skills: [String]!
