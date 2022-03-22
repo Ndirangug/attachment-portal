@@ -20,8 +20,8 @@ export const schema = gql`
   }
 
   type Query {
-    students: [Student!]! @requireAuth
-    student(id: String!): Student @requireAuth
+    students: [Student!]! @skipAuth
+    student(id: String!): Student @skipAuth
   }
 
   input CreateStudentInput {

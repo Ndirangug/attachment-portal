@@ -9,7 +9,7 @@ generator client {
 }
 
 model User {
-  id                  String               @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   email               String               @unique
   role                Role                 @default(STUDENT)
   createdAt           DateTime             @default(now())
@@ -32,7 +32,7 @@ enum Role {
 }
 
 model Student {
-  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   firstName      String
   lastName       String
   title          String
@@ -52,7 +52,7 @@ model Student {
 }
 
 model Company {
-  id                  String               @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   name                String
   bio                 String
   industry            String
@@ -65,7 +65,7 @@ model Company {
 }
 
 model IndustrySupervisor {
-  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   firstName      String
   lastName       String
   user           User           @relation(fields: [userId], references: [id])
@@ -76,7 +76,7 @@ model IndustrySupervisor {
 }
 
 model SchoolSupervisor {
-  id             String         @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   firstName      String
   lastName       String
   user           User           @relation(fields: [userId], references: [id])
@@ -85,7 +85,7 @@ model SchoolSupervisor {
 }
 
 model Opportunity {
-  id               String        @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
   title            String
   createdAt        DateTime      @default(now())
   compnsation      Int
@@ -102,7 +102,7 @@ model Opportunity {
 }
 
 model Application {
-  id            String            @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
   status        ApplicationStatus @default(PENDING)
   createdAt     DateTime          @default(now())
   student       Student           @relation(fields: [studentId], references: [id])
@@ -119,14 +119,14 @@ enum ApplicationStatus {
 }
 
 model Placement {
-  id            String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime    @default(now())
   application   Application @relation(fields: [applicationId], references: [id])
   applicationId String      @unique @db.ObjectId
 }
 
 model LogbookEntry {
-  id                         String             @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id                         String             @id @default(auto()) @map("_id") @db.ObjectId
   date                       DateTime           @default(now())
   student                    Student            @relation(fields: [studentId], references: [id])
   studentId                  String             @db.ObjectId
