@@ -14,12 +14,20 @@ export const student = ({ id }: Prisma.StudentWhereUniqueInput) => {
 }
 
 interface CreateStudentArgs {
-  input: Prisma.StudentCreateInput
+  student: Prisma.StudentCreateInput
+  userId: string
 }
 
-export const createStudent = ({ input }: CreateStudentArgs) => {
-  return db.student.create({
-    data: input,
+export const createStudent = ({ student, userId }: CreateStudentArgs) => {
+  return db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      student: {
+        create: student,
+      },
+    },
   })
 }
 

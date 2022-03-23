@@ -29,6 +29,9 @@ const StudentProfile = ({
     console.log('saveProfile')
   }
 
+  console.log('received profile')
+  console.log(profile)
+
   return (
     <div className="bg-white p-16">
       <div className="profile-header flex justify-start items-center">

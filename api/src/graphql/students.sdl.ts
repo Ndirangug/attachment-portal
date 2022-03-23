@@ -37,7 +37,6 @@ export const schema = gql`
     skills: [String]!
     experience: JSON!
     education: JSON!
-    userId: String!
   }
 
   input UpdateStudentInput {
@@ -57,9 +56,9 @@ export const schema = gql`
   }
 
   type Mutation {
-    createStudent(input: CreateStudentInput!): Student! @requireAuth
-    updateStudent(id: String!, input: UpdateStudentInput!): Student!
-      @requireAuth
-    deleteStudent(id: String!): Student! @requireAuth
+    createStudent(student: CreateStudentInput!, userId: String): Student!
+      @skipAuth
+    updateStudent(id: String!, input: UpdateStudentInput!): Student! @skipAuth
+    deleteStudent(id: String!): Student! @skipAuth
   }
 `
