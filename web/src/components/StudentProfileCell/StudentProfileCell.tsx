@@ -8,13 +8,19 @@ export const QUERY = gql`
       id
       email
       student {
+        id
         firstName
         lastName
-        aboutMe
         title
-        experience
-        education
+        course
+        city
+        aboutMe
         skills
+        linkedinUrl
+        githubUrl
+        twitterUrl
+        education
+        experience
       }
     }
   }

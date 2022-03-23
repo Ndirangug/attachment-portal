@@ -46,18 +46,17 @@ export const schema = gql`
     linkedinUrl: String
     githubUrl: String
     twitterUrl: String
-    city: String!
+    city: String
     course: String
     aboutMe: String
-    skills: [String]!
+    skills: [String!]
     experience: JSON
     education: JSON
     userId: String
   }
 
   type Mutation {
-    createStudent(student: CreateStudentInput!, userId: String): Student!
-      @skipAuth
+    createStudent(student: CreateStudentInput!, userId: String): User! @skipAuth
     updateStudent(id: String!, input: UpdateStudentInput!): Student! @skipAuth
     deleteStudent(id: String!): Student! @skipAuth
   }
