@@ -1,5 +1,5 @@
 import { StudentProfileQuery } from 'types/graphql'
-import { Avatar, TextField, Button, IconButton } from '@mui/material'
+import { Avatar, TextField, Button, IconButton, Chip } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import type { CellSuccessProps } from '@redwoodjs/web'
 import { useState } from 'react'
@@ -33,6 +33,7 @@ const StudentProfile = ({
   const [course, setCourse] = useState('City')
   const [title, setTitle] = useState('City')
   const [editabe, setEditabe] = useState(true)
+  const [skillBuffer, setSkillBuffer] = useState('')
   const [localStateSet, setLocalStateSet] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogTitle, setDialogTitle] = useState('Add Education')
@@ -56,8 +57,6 @@ const StudentProfile = ({
   )
 
   const saveProfile = () => {
-    console.log('saveProfile')
-
     if (profile.student) {
       updateStudent({
         variables: {
@@ -91,8 +90,6 @@ const StudentProfile = ({
   })
 
   const populateLocalState = () => {
-    // console.log('populateLocalState')
-    // console.log(profile)
     if (profile.student && localStateSet === false) {
       setFirstName(profile.student.firstName)
       setLastName(profile.student.lastName)
@@ -143,6 +140,16 @@ const StudentProfile = ({
         },
       ])
     }
+  }
+
+  const deleteSkill = (skillToRemove) => {
+    const updatedSkills = skills.filter((skill) => skill != skillToRemove)
+    setSkills(updatedSkills)
+  }
+
+  const addSkill = (skillToAdd) => {
+    setSkills([...skills, skillToAdd])
+    setSkillBuffer('')
   }
 
   populateLocalState()
@@ -212,7 +219,6 @@ const StudentProfile = ({
               onClick={() => {
                 setDialogTitle('Add Experience')
                 toggleDialog()
-                console.log('add experience')
               }}
             >
               <Add />
@@ -220,7 +226,7 @@ const StudentProfile = ({
           </div>
 
           {experience.map((entry, i) => (
-            <ExperienceEntry key={i} />
+            <ExperienceEntry key={i} entry={entry} />
           ))}
         </div>
 
@@ -240,18 +246,54 @@ const StudentProfile = ({
               onClick={() => {
                 setDialogTitle('Add Education')
                 toggleDialog()
-                console.log('add eduction')
               }}
             >
               <Add />
             </IconButton>
           </div>
           {education.map((entry, i) => (
-            <ExperienceEntry key={i} />
+            <EducationEntry key={i} entry={entry} />
           ))}
         </div>
 
-        <div className="skills"></div>
+        <div className="skills">
+          <div className="flex items-center">
+            <h1 className="uppercase font-bold">Skills</h1>
+            <IconButton
+              className="ml-5"
+              sx={{
+                height: '1.5em',
+                width: '1.5em',
+                backgroundColor: 'primary.main',
+                color: 'white',
+                '&:hover': { backgroundColor: 'primary.main' },
+              }}
+              size="small"
+              onClick={() => {}}
+            >
+              <Add />
+            </IconButton>
+          </div>
+          <EditText
+            className="my-2"
+            readonly={!editabe}
+            value={skillBuffer}
+            placeholder="Add Skill"
+            onChange={setSkillBuffer}
+            onSave={({ value }) => {
+              addSkill(value)
+            }}
+          />
+          {skills.map((entry, i) => (
+            <Chip
+              className="mx-1 text-white"
+              color="primary"
+              label={entry}
+              key={i}
+              onDelete={() => deleteSkill(entry)}
+            />
+          ))}
+        </div>
 
         <div className="save-btn mt-10">
           <LoadingButton

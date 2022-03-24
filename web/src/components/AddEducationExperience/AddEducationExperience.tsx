@@ -102,7 +102,6 @@ const AddEducationExperience = ({
                 shrink: true,
               }}
               onChange={(event) => {
-                console.log('start date, ', event.target.value)
                 setStartDate(event.target.value)
               }}
             />
@@ -116,9 +115,7 @@ const AddEducationExperience = ({
                 shrink: true,
               }}
               onChange={(event) => {
-                console.log('start date, ', event.target.value)
                 setEndDate(event.target.value)
-                //setCurrentlyHere(false)
               }}
             />
           </div>
