@@ -1,5 +1,5 @@
 import { StudentProfileQuery } from 'types/graphql'
-import { Avatar, TextField, Button } from '@mui/material'
+import { Avatar, TextField, Button, IconButton } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import type { CellSuccessProps } from '@redwoodjs/web'
 import { useState } from 'react'
@@ -10,6 +10,8 @@ import EducationEntry from 'src/components/EducationEntry/EducationEntry'
 import { useMutation } from '@redwoodjs/web'
 import { CREATE_STUDENT, UPDATE_STUDENT } from './mutations'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+import { Add } from '@mui/icons-material'
+import AddEducationExperience from '../AddEducationExperience/AddEducationExperience'
 
 const StudentProfile = ({
   profile,
@@ -30,8 +32,10 @@ const StudentProfile = ({
   const [city, setCity] = useState('City')
   const [course, setCourse] = useState('City')
   const [title, setTitle] = useState('City')
-  const [editabe, setEditabe] = useState(false)
+  const [editabe, setEditabe] = useState(true)
   const [localStateSet, setLocalStateSet] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogTitle, setDialogTitle] = useState('Add Education')
 
   const [createStudent, { createLoading, createError }] = useMutation(
     CREATE_STUDENT,
@@ -55,7 +59,6 @@ const StudentProfile = ({
     console.log('saveProfile')
 
     if (profile.student) {
-      console.log('update')
       updateStudent({
         variables: {
           id: profile.student.id,
@@ -63,7 +66,6 @@ const StudentProfile = ({
         },
       })
     } else {
-      console.log('creaate')
       createStudent({
         variables: {
           userId: profile.id,
@@ -109,13 +111,53 @@ const StudentProfile = ({
     }
   }
 
+  const toggleDialog = () => setDialogOpen(!dialogOpen)
+
+  const updateStateFromDialog = ({
+    title,
+    institution,
+    description,
+    startDate,
+    endDate,
+    currentlyHere,
+    isEducation,
+  }) => {
+    if (isEducation) {
+      setEducation([
+        ...education,
+        {
+          course: title,
+          school: institution,
+          description,
+          duration: `${startDate} - ${currentlyHere ? 'present' : endDate}`,
+        },
+      ])
+    } else {
+      setExperience([
+        ...experience,
+        {
+          position: title,
+          company: institution,
+          description,
+          duration: `${startDate} - ${currentlyHere ? 'present' : endDate}`,
+        },
+      ])
+    }
+  }
+
   populateLocalState()
 
   return (
     <>
       <Toaster />
+      <AddEducationExperience
+        isOpen={dialogOpen}
+        dialogTitle={dialogTitle}
+        handleClose={toggleDialog}
+        updateProfileState={updateStateFromDialog}
+      />
 
-      <div className="bg-white p-16">
+      <div className="bg-white p-8 lg:p-32">
         <div className="profile-header flex justify-start items-center">
           <div className="avatar">
             <Avatar sx={{ width: '8em', height: '8em' }}>FN</Avatar>
@@ -123,17 +165,20 @@ const StudentProfile = ({
           <div className="summary ml-10 w-full">
             <div className="name flex">
               <EditText
+                readonly={!editabe}
                 onChange={setFirstName}
                 value={firstName}
                 placeholder="First Name"
               />
               <EditText
+                readonly={!editabe}
                 onChange={setLastName}
                 value={lastName}
                 placeholder="Last Name"
               />
             </div>
             <EditText
+              readonly={!editabe}
               value={course}
               placeholder="Course"
               onChange={setCourse}
@@ -144,6 +189,7 @@ const StudentProfile = ({
         <div className="about mt-12">
           <h1 className="uppercase font-bold">About Me</h1>
           <EditTextarea
+            readonly={!editabe}
             onChange={setAboutme}
             value={aboutMe}
             placeholder="about me"
@@ -151,16 +197,57 @@ const StudentProfile = ({
         </div>
 
         <div className="experience mt-12">
-          <h1 className="uppercase font-bold">Experience</h1>
-          {experience.map((entry) => (
-            <ExperienceEntry key={entry.id} />
+          <div className="flex items-center">
+            <h1 className="uppercase font-bold">Experience</h1>
+            <IconButton
+              className="ml-5"
+              sx={{
+                height: '1.5em',
+                width: '1.5em',
+                backgroundColor: 'primary.main',
+                color: 'white',
+                '&:hover': { backgroundColor: 'primary.main' },
+              }}
+              size="small"
+              onClick={() => {
+                setDialogTitle('Add Experience')
+                toggleDialog()
+                console.log('add experience')
+              }}
+            >
+              <Add />
+            </IconButton>
+          </div>
+
+          {experience.map((entry, i) => (
+            <ExperienceEntry key={i} />
           ))}
         </div>
 
         <div className="education mt-12">
-          <h1 className="uppercase font-bold">Education</h1>
-          {experience.map((entry) => (
-            <ExperienceEntry key={entry.id} />
+          <div className="flex items-center">
+            <h1 className="uppercase font-bold">Education</h1>
+            <IconButton
+              className="ml-5"
+              sx={{
+                height: '1.5em',
+                width: '1.5em',
+                backgroundColor: 'primary.main',
+                color: 'white',
+                '&:hover': { backgroundColor: 'primary.main' },
+              }}
+              size="small"
+              onClick={() => {
+                setDialogTitle('Add Education')
+                toggleDialog()
+                console.log('add eduction')
+              }}
+            >
+              <Add />
+            </IconButton>
+          </div>
+          {education.map((entry, i) => (
+            <ExperienceEntry key={i} />
           ))}
         </div>
 

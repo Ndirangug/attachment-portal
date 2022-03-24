@@ -18,7 +18,7 @@ const StudentProfilePage = () => {
         </div>
       </PageHeader>
 
-      <div className="content bg-gray-300 px-7 py-7">
+      <div className="content bg-gray-300 px-16 lg:px-32 py-16 lg:py-32">
         <StudentProfileCell id={currentUser.id} />
       </div>
     </>
