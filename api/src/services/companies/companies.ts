@@ -14,12 +14,20 @@ export const company = ({ id }: Prisma.CompanyWhereUniqueInput) => {
 }
 
 interface CreateCompanyArgs {
-  input: Prisma.CompanyCreateInput
+  company: Prisma.CompanyCreateInput
+  userId: string
 }
 
-export const createCompany = ({ input }: CreateCompanyArgs) => {
-  return db.company.create({
-    data: input,
+export const createCompany = ({ company, userId }: CreateCompanyArgs) => {
+  return db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      company: {
+        create: company,
+      },
+    },
   })
 }
 

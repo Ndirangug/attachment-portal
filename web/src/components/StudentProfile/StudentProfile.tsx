@@ -88,7 +88,6 @@ const StudentProfile = ({
     education: JSON.stringify(education),
     experience: JSON.stringify(experience),
   })
-
   const populateLocalState = () => {
     if (profile.student && localStateSet === false) {
       setFirstName(profile.student.firstName)

@@ -1,19 +1,26 @@
+import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
+import PageHeader from 'src/components/PageHeader/PageHeader'
+import CompanyProfileCell from 'src/components/CompanyProfileCell/CompanyProfileCell'
 
 const RecruiterPage = () => {
+  const { currentUser } = useAuth()
+  console.log(currentUser)
+
   return (
     <>
-      <MetaTags title="Recruiter" description="Recruiter page" />
+      <MetaTags title="CompanyProfile" description="CompanyProfile page" />
 
-      <h1>RecruiterPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/RecruiterPage/RecruiterPage.tsx</code>
-      </p>
-      <p>
-        My default route is named <code>recruiter</code>, link to me with `
-        <Link to={routes.recruiter()}>Recruiter</Link>`
-      </p>
+      <PageHeader>
+        <div className="flex justify-center items-center">
+          <h1 className="text-white text-3xl">Company Profile</h1>
+        </div>
+      </PageHeader>
+
+      <div className="content bg-gray-300 px-16 lg:px-32 py-16 lg:py-32">
+        <CompanyProfileCell id={currentUser.id} />
+      </div>
     </>
   )
 }

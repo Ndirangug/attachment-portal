@@ -13,8 +13,8 @@ export const schema = gql`
   }
 
   type Query {
-    companies: [Company!]! @requireAuth
-    company(id: String!): Company @requireAuth
+    companies: [Company!]! @skipAuth
+    company(id: String!): Company @skipAuth
   }
 
   input CreateCompanyInput {
@@ -23,7 +23,6 @@ export const schema = gql`
     industry: String!
     photo: String!
     location: String!
-    userId: String!
   }
 
   input UpdateCompanyInput {
@@ -36,7 +35,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createCompany(input: CreateCompanyInput!): Company! @requireAuth
+    createCompany(company: CreateCompanyInput!, userId: String!): User!
+      @requireAuth
     updateCompany(id: String!, input: UpdateCompanyInput!): Company!
       @requireAuth
     deleteCompany(id: String!): Company! @requireAuth
