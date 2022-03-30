@@ -33,7 +33,7 @@ describe('opportunities', () => {
     const result = await createOpportunity({
       input: {
         title: 'String',
-        compnsation: 2120097,
+        compensation: 2120097,
         jobDescription: 'String',
         requirements: 'String',
         details: { foo: 'bar' },
@@ -46,7 +46,7 @@ describe('opportunities', () => {
     })
 
     expect(result.title).toEqual('String')
-    expect(result.compnsation).toEqual(2120097)
+    expect(result.compensation).toEqual(2120097)
     expect(result.jobDescription).toEqual('String')
     expect(result.requirements).toEqual('String')
     expect(result.details).toEqual({ foo: 'bar' })

@@ -88,7 +88,7 @@ model Opportunity {
   id               String        @id @default(auto()) @map("_id") @db.ObjectId
   title            String
   createdAt        DateTime      @default(now())
-  compnsation      Int
+  compensation      Int
   jobDescription   String
   requirements     String[]
   details          Json

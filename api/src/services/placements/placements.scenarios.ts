@@ -27,7 +27,7 @@ export const standard = defineScenario<Prisma.PlacementCreateArgs>({
             opportunity: {
               create: {
                 title: 'String',
-                compnsation: 5821241,
+                compensation: 5821241,
                 jobDescription: 'String',
                 requirements: 'String',
                 details: { foo: 'bar' },
@@ -82,7 +82,7 @@ export const standard = defineScenario<Prisma.PlacementCreateArgs>({
             opportunity: {
               create: {
                 title: 'String',
-                compnsation: 6910727,
+                compensation: 6910727,
                 jobDescription: 'String',
                 requirements: 'String',
                 details: { foo: 'bar' },

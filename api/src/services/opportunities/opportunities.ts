@@ -14,12 +14,36 @@ export const opportunity = ({ id }: Prisma.OpportunityWhereUniqueInput) => {
 }
 
 interface CreateOpportunityArgs {
-  input: Prisma.OpportunityCreateInput
+  opportunity: Prisma.OpportunityCreateInput
+  companyId: string
 }
 
-export const createOpportunity = ({ input }: CreateOpportunityArgs) => {
+export const createOpportunity = ({
+  opportunity,
+  companyId,
+}: CreateOpportunityArgs) => {
+  // const result =  db.company.update({
+  //   where: {
+  //     id: companyId,
+  //   },
+  //   data: {
+  //     opportunities: {
+  //       create: [opportunity],
+  //     },
+  //   },
+  // })
+
+  // //console.log(result)
+  // console.log(result.opportunities)
+
+  // return result.opportunities
   return db.opportunity.create({
-    data: input,
+    data: {
+      ...opportunity,
+      company: {
+        connect: { id: companyId },
+      },
+    },
   })
 }
 

@@ -120,6 +120,7 @@ const CompanyProfile = ({
 
           <div className="save-btn mt-10">
             <LoadingButton
+              sx={{ width: 'max-content' }}
               loading={createLoading || updateloading}
               //loading={true}
               variant="contained"
@@ -127,7 +128,7 @@ const CompanyProfile = ({
               onClick={saveProfile}
               // sx={{translate: 'right'}}
             >
-              SAVE
+              SAVE PROFILE
             </LoadingButton>
           </div>
         </div>
@@ -137,3 +138,4 @@ const CompanyProfile = ({
 }
 
 export default CompanyProfile
+

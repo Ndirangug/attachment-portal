@@ -1,6 +1,7 @@
 import type { CompanyProfileQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import CompanyProfile from 'src/components/CompanyProfile/CompanyProfile'
+import CompanyContainer from '../CompanyContainer/CompanyContainer'
 
 export const QUERY = gql`
   query CompanyProfileQuery($id: String!) {
@@ -14,10 +15,30 @@ export const QUERY = gql`
         industry
         photo
         location
+        opportunities {
+          id
+          title
+          compensation
+          createdAt
+          jobDescription
+          requirements
+          details
+          location
+          skillsRequired
+          skillsPrefferred
+          industry
+        }
       }
     }
   }
 `
+export const beforeQuery = (props) => {
+  return {
+    variables: props,
+    fetchPolicy: 'cache-and-network',
+    pollInterval: 2500,
+  }
+}
 
 export const Loading = () => <div>Loading...</div>
 
@@ -32,7 +53,7 @@ export const Success = ({
 }: CellSuccessProps<CompanyProfileQuery>) => {
   return (
     <div>
-      <CompanyProfile profile={companyProfile} />
+      <CompanyContainer profile={companyProfile} />
     </div>
   )
 }
