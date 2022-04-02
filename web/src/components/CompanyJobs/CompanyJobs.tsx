@@ -38,7 +38,11 @@ const OpportunityJobs = ({
       </Button>
 
       {profile.company.opportunities.map((opportunity, i) => (
-        <OpportunityCard key={i} opportunity={opportunity} />
+        <OpportunityCard
+          key={i}
+          company={profile.company}
+          opportunity={opportunity}
+        />
       ))}
     </div>
   )
