@@ -17,8 +17,8 @@ export const schema = gql`
   }
 
   type Query {
-    applications: [Application!]! @requireAuth
-    application(id: String!): Application @requireAuth
+    applications: [Application!]! @skipAuth
+    application(id: String!): Application @skipAuth
   }
 
   input CreateApplicationInput {
@@ -34,11 +34,11 @@ export const schema = gql`
   }
 
   type Mutation {
-    createApplication(input: CreateApplicationInput!): Application! @requireAuth
+    createApplication(input: CreateApplicationInput!): Application! @skipAuth
     updateApplication(
       id: String!
       input: UpdateApplicationInput!
-    ): Application! @requireAuth
-    deleteApplication(id: String!): Application! @requireAuth
+    ): Application! @skipAuth
+    deleteApplication(id: String!): Application! @skipAuth
   }
 `

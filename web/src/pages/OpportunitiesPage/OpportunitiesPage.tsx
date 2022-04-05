@@ -7,6 +7,9 @@ import { alpha, styled } from '@mui/material/styles'
 import OpportunitiesCell from 'src/components/OpportunitiesCell/OpportunitiesCell'
 import { OpportunitiesQuery } from 'types/graphql'
 import OpportunitiesListing from 'src/components/OpportunitiesListing/OpportunitiesListing'
+import { useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/dist/toast'
+import { CREATE_APPLICATION } from './mutations'
 
 const OpportunitiesPage = () => {
   const [opportunities, setOpportunities] =
@@ -32,10 +35,23 @@ const OpportunitiesPage = () => {
     },
   })
 
+  const [createApplication, { createLoading, createError }] = useMutation(
+    CREATE_APPLICATION,
+    {
+      onCompleted: () => {
+        toast.success('Application sent  successfully!')
+      },
+      onError: (error) => {
+        console.log(error)
+        toast.error(error.message)
+      },
+    }
+  )
+
   return (
     <>
       <MetaTags title="Opportunities" description="Opportunities page" />
-
+      <Toaster />
       <PageHeader>
         <div className="opportunities-header flex flex-col justify-center items-center text-white">
           <h1 className="text-3xl mb-6">Attachment Portal</h1>
@@ -92,7 +108,12 @@ const OpportunitiesPage = () => {
             updateOpportunities={setOpportunities}
           />
 
-          <OpportunitiesListing opportunities={opportunities} />
+          <OpportunitiesListing
+            opportunities={opportunities}
+            // deleteOpportunity={deleteOpportunity}
+            // edit={edit}
+            apply={createApplication}
+          />
         </div>
       </div>
     </>

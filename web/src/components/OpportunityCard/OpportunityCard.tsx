@@ -2,15 +2,27 @@ import { Company, Opportunity } from 'types/graphql'
 import { Avatar, Chip, Button } from '@mui/material'
 import { useState } from 'react'
 import { Business, LocationOn, MonetizationOn } from '@mui/icons-material'
+import { ApplicationStatus } from 'types/graphql'
 
 interface OpportunityCardProps {
   opportunity: Opportunity
   company: Company
+  isStudent?: boolean
+  studentId?: string
+  deleteOpportunity?: (options?: any) => Promise<any>
+  edit?: (options?: any) => Promise<any>
+  apply?: (options?: any) => Promise<any>
 }
 
-const OpportunityCard = ({ opportunity, company }: OpportunityCardProps) => {
-  const [isStudent, setIsStudent] = useState(false)
-
+const OpportunityCard = ({
+  opportunity,
+  company,
+  isStudent = false,
+  deleteOpportunity,
+  edit,
+  apply,
+  studentId,
+}: OpportunityCardProps) => {
   return (
     <div>
       <div className="flex px-5 pt-6 pb-3 border border-gray-500 my-4">
@@ -49,7 +61,20 @@ const OpportunityCard = ({ opportunity, company }: OpportunityCardProps) => {
             <div className="actions">
               {isStudent ? (
                 <div className="student-actions">
-                  <Button>Apply</Button>
+                  <Button
+                    onClick={() => {
+                      console.log('apply studentid ', studentId)
+                      apply({
+                        variables: {
+                          status: 'PENDING',
+                          studentId: studentId,
+                          opportunityId: opportunity.id,
+                        },
+                      })
+                    }}
+                  >
+                    Apply
+                  </Button>
                 </div>
               ) : (
                 <div className="recruiter-actions">
