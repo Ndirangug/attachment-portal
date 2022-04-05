@@ -8,6 +8,7 @@ export const CREATE_OPPORTUNITY = gql`
       title
       compensation
       createdAt
+      category
       jobDescription
       requirements
       details
@@ -28,6 +29,7 @@ export const UPDATE_OPPORTUNITY = gql`
       title
       compensation
       createdAt
+      category
       jobDescription
       requirements
       details

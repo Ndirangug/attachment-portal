@@ -20,6 +20,7 @@ export const QUERY = gql`
           title
           compensation
           createdAt
+          category
           jobDescription
           requirements
           details

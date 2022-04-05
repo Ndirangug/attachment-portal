@@ -1,10 +1,32 @@
-import type { Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
-export const opportunities = () => {
-  return db.opportunity.findMany()
+interface OpportunitiesArgs {
+  category: string
+  location: string
+  title: string
+}
+
+export const opportunities = ({
+  category = '',
+  location = '',
+  title = '',
+}: OpportunitiesArgs) => {
+  return db.opportunity.findMany({
+    where: {
+      OR: [
+        { category: category },
+        { location: location },
+        {
+          title: {
+            contains: title,
+          },
+        },
+      ],
+    },
+  })
 }
 
 export const opportunity = ({ id }: Prisma.OpportunityWhereUniqueInput) => {
@@ -22,20 +44,6 @@ export const createOpportunity = ({
   opportunity,
   companyId,
 }: CreateOpportunityArgs) => {
-  // const result =  db.company.update({
-  //   where: {
-  //     id: companyId,
-  //   },
-  //   data: {
-  //     opportunities: {
-  //       create: [opportunity],
-  //     },
-  //   },
-  // })
-
-  // //console.log(result)
-  // console.log(result.opportunities)
-
   // return result.opportunities
   return db.opportunity.create({
     data: {

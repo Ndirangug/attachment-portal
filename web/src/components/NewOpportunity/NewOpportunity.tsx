@@ -34,6 +34,7 @@ const NewOpportunity = ({
 }: JobOpportunityProps) => {
   const [title, setTitle] = useState('Job Titles')
   const [jobDescription, setJobDescription] = useState('')
+  const [category, setCategory] = useState('')
   const [requirements, setRequirements] = useState([])
   const [compensation, setCompensation] = useState(0)
   const [location, setLocation] = useState('')
@@ -103,6 +104,7 @@ const NewOpportunity = ({
     skillsRequired,
     skillsPrefferred,
     industry,
+    category
   })
 
   const populateLocalState = () => {
@@ -115,7 +117,7 @@ const NewOpportunity = ({
       setSkillsPrefferred(opportunity.skillsPrefferred)
       setSkillsRequired(opportunity.skillsRequired)
       setIndustry(opportunity.industry)
-
+      setCategory(opportunity.category)
       setLocalStateSet(true)
     }
   }
@@ -149,6 +151,17 @@ const NewOpportunity = ({
             variant="standard"
             value={jobDescription}
             onChange={(event) => setJobDescription(event.target.value)}
+          />
+          <TextField
+            margin="dense"
+            multiline
+            id="category"
+            label="Category"
+            fullWidth
+            required
+            variant="standard"
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
           />
           <TextField
             margin="dense"

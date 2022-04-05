@@ -4,6 +4,7 @@ export const schema = gql`
     title: String!
     createdAt: DateTime!
     compensation: Int!
+    category: String!
     jobDescription: String!
     requirements: [String]!
     details: JSON!
@@ -17,7 +18,11 @@ export const schema = gql`
   }
 
   type Query {
-    opportunities: [Opportunity!]! @skipAuth
+    opportunities(
+      category: String
+      location: String
+      title: String
+    ): [Opportunity!]! @skipAuth
     opportunity(id: String!): Opportunity @skipAuth
   }
 
@@ -25,6 +30,7 @@ export const schema = gql`
     title: String!
     compensation: Int!
     jobDescription: String!
+    category: String!
     requirements: [String]!
     details: JSON!
     location: String!
@@ -37,6 +43,7 @@ export const schema = gql`
     title: String
     compensation: Int
     jobDescription: String
+    category: String
     requirements: [String]!
     details: JSON
     location: String
