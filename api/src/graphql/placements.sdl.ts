@@ -7,8 +7,8 @@ export const schema = gql`
   }
 
   type Query {
-    placements: [Placement!]! @requireAuth
-    placement(id: String!): Placement @requireAuth
+    placements: [Placement!]! @skipAuth
+    placement(id: String!): Placement @skipAuth
   }
 
   input CreatePlacementInput {
@@ -20,9 +20,9 @@ export const schema = gql`
   }
 
   type Mutation {
-    createPlacement(input: CreatePlacementInput!): Placement! @requireAuth
+    createPlacement(input: CreatePlacementInput!): Placement! @skipAuth
     updatePlacement(id: String!, input: UpdatePlacementInput!): Placement!
-      @requireAuth
-    deletePlacement(id: String!): Placement! @requireAuth
+      @skipAuth
+    deletePlacement(id: String!): Placement! @skipAuth
   }
 `

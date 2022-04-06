@@ -68,14 +68,16 @@ const ReceivedApplications = ({
       {profile.company.opportunities.map((opportunity, i) => (
         <TabPanel key={i} value={value} index={1}>
           <Grid className="opportunities-grid" container spacing={2}>
-            {opportunity.applications.map((application, j) => (
-              <Grid item xs={12} sm={6} md={4} key={j}>
-                <StudentApplicationCard
-                  application={application}
-                  opportunityId={opportunity.id}
-                />
-              </Grid>
-            ))}
+            {opportunity.applications
+              .filter((application) => application.status !== 'ACCEPTED')
+              .map((application, j) => (
+                <Grid item xs={12} sm={6} md={4} key={j}>
+                  <StudentApplicationCard
+                    application={application}
+                    opportunityId={opportunity.id}
+                  />
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
       ))}

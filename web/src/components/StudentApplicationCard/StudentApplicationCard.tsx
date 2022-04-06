@@ -6,6 +6,7 @@ import {
   CardContent,
   Typography,
   Button,
+  Chip,
 } from '@mui/material'
 import { Application } from 'types/graphql'
 import { useState } from 'react'
@@ -52,6 +53,15 @@ const StudentApplicationCard = ({
             <Typography variant="body2" color="text.secondary">
               {application.student.aboutMe.substring(0, 100)} ...
             </Typography>
+
+            <Chip
+              className="mt-4"
+              label={
+                <Typography variant="body2" color="text.secondary">
+                  {application.status}
+                </Typography>
+              }
+            ></Chip>
           </CardContent>
         </CardActionArea>
         <CardActions>
