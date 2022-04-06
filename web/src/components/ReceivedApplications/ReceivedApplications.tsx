@@ -1,10 +1,10 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { CellSuccessProps } from '@redwoodjs/web'
 import { CompanyProfileQuery } from 'types/graphql'
+import { Box, Tab, Tabs, Typography, Grid } from '@mui/material'
 import { useState } from 'react'
 import CompanyJobs from '../CompanyJobs/CompanyJobs'
 import CompanyProfile from '../CompanyProfile/CompanyProfile'
-import ReceivedApplications from '../ReceivedApplications/ReceivedApplications'
+import StudentApplicationCard from '../StudentApplicationCard/StudentApplicationCard'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -17,8 +17,8 @@ function TabPanel({ children, value, index }: TabPanelProps) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`applications-tabpanel-${index}`}
+      aria-labelledby={`applications-tab-${index}`}
       // {...other}
     >
       {value === index && (
@@ -32,12 +32,12 @@ function TabPanel({ children, value, index }: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `applications-tab-${index}`,
+    'aria-controls': `applications-tabpanel-${index}`,
   }
 }
 
-const CompanyContainer = ({
+const ReceivedApplications = ({
   profile,
 }: {
   profile: CellSuccessProps<CompanyProfileQuery>
@@ -49,19 +49,37 @@ const CompanyContainer = ({
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box className="received-applications-container" sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
         >
-          <Tab label="Profile" {...a11yProps(0)} />
-          <Tab label="Opportunities" {...a11yProps(1)} />
-          <Tab label="Received Applications" {...a11yProps(2)} />
+          {profile.company.opportunities.map((opportunity, i) => (
+            <Tab key={i} label={opportunity.title} {...a11yProps(i)} />
+          ))}
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+
+      {profile.company.opportunities.map((opportunity, i) => (
+        <TabPanel key={i} value={value} index={1}>
+          <Grid className="opportunities-grid" container spacing={2}>
+            {opportunity.applications.map((application, j) => (
+              <Grid item xs={12} sm={6} md={4} key={j}>
+                <StudentApplicationCard
+                  application={application}
+                  opportunityId={opportunity.id}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </TabPanel>
+      ))}
+      {/* <TabPanel value={value} index={0}>
         <CompanyProfile profile={profile} />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -69,9 +87,9 @@ const CompanyContainer = ({
       </TabPanel>
       <TabPanel value={value} index={2}>
         <ReceivedApplications profile={profile} />
-      </TabPanel>
+      </TabPanel> */}
     </Box>
   )
 }
 
-export default CompanyContainer
+export default ReceivedApplications

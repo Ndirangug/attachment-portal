@@ -73,24 +73,7 @@ const AddEducationExperience = ({
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
-          {/* <LocalizationProvider >
-            <DatePicker
-              renderInput={(props) => <TextField {...props} />}
-              label="Start Date"
-              value={startDate}
-              onChange={(newValue) => {
-                setStartDate(newValue)
-              }}
-            />
-            <DatePicker
-              renderInput={(props) => <TextField {...props} />}
-              label="Start Date"
-              value={endDate}
-              onChange={(newValue) => {
-                setEndDate(newValue)
-              }}
-            />
-          </LocalizationProvider> */}
+
           <div className="dates mt-4 mb-1 flex justify-between space-x-2">
             <TextField
               id="startdate"

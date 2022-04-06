@@ -1,5 +1,5 @@
 import { CellSuccessProps, useMutation } from '@redwoodjs/web'
-import { CreateOpportunityInput, OpportunityProfileQuery } from 'types/graphql'
+import { CreateOpportunityInput, CompanyProfileQuery } from 'types/graphql'
 import { useState } from 'react'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { CREATE_OPPORTUNITY, UPDATE_OPPORTUNITY } from './mutations'
@@ -10,7 +10,7 @@ import OpportunityCard from '../OpportunityCard/OpportunityCard'
 const OpportunityJobs = ({
   profile,
 }: {
-  profile: CellSuccessProps<OpportunityProfileQuery>
+  profile: CellSuccessProps<CompanyProfileQuery>
 }) => {
   //const [opportunities, setOpportunities] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false)

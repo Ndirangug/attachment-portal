@@ -28,6 +28,25 @@ export const QUERY = gql`
           skillsRequired
           skillsPrefferred
           industry
+          applications {
+            id
+            status
+            student {
+              id
+              firstName
+              lastName
+              course
+              linkedinUrl
+              githubUrl
+              twitterUrl
+              city
+              aboutMe
+              experience
+              education
+              skills
+            }
+            createdAt
+          }
         }
       }
     }

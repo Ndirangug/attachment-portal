@@ -84,7 +84,10 @@ const CompanyProfile = ({
       <div className="bg-white p-8 lg:p-32">
         <div className=" flex justify-start items-center flex-col">
           <div className="avatar">
-            <Avatar sx={{ width: '8em', height: '8em' }}>FN</Avatar>
+            <Avatar
+              src={`https://ui-avatars.com/api/?name=${name}&background=random&size=512`}
+              sx={{ width: '8em', height: '8em' }}
+            />
           </div>
 
           <div className="fields mt-2 flex justify-start items-center flex-col">
@@ -138,4 +141,3 @@ const CompanyProfile = ({
 }
 
 export default CompanyProfile
-

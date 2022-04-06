@@ -6,7 +6,6 @@ import CompanyProfileCell from 'src/components/CompanyProfileCell/CompanyProfile
 
 const RecruiterPage = () => {
   const { currentUser } = useAuth()
-  console.log(currentUser)
 
   return (
     <>
