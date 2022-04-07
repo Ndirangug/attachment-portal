@@ -46,6 +46,18 @@ export const QUERY = gql`
               skills
             }
             createdAt
+            Placement {
+              id
+              createdAt
+            }
+            opportunity {
+              id
+              title
+              company {
+                id
+                name
+              }
+            }
           }
         }
       }

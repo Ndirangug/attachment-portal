@@ -1,5 +1,6 @@
 import { Company, Opportunity } from 'types/graphql'
 import { Avatar, Chip, Button } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import { Business, LocationOn, MonetizationOn } from '@mui/icons-material'
 import { ApplicationStatus } from 'types/graphql'
@@ -23,6 +24,8 @@ const OpportunityCard = ({
   apply,
   studentId,
 }: OpportunityCardProps) => {
+  const [loading, setLoading] = useState(false)
+
   return (
     <div>
       <div className="flex px-5 pt-6 pb-3 border border-gray-500 my-4">
@@ -61,20 +64,24 @@ const OpportunityCard = ({
             <div className="actions">
               {isStudent ? (
                 <div className="student-actions">
-                  <Button
-                    onClick={() => {
-                      console.log('apply studentid ', studentId)
-                      apply({
+                  <LoadingButton
+                    loading={loading}
+                    onClick={async () => {
+                    
+                      setLoading(true)
+                      const result = await apply({
                         variables: {
                           status: 'PENDING',
                           studentId: studentId,
                           opportunityId: opportunity.id,
                         },
                       })
+                      setLoading(false)
+
                     }}
                   >
                     Apply
-                  </Button>
+                  </LoadingButton>
                 </div>
               ) : (
                 <div className="recruiter-actions">

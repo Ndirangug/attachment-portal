@@ -66,7 +66,7 @@ const ReceivedApplications = ({
       </Box>
 
       {profile.company.opportunities.map((opportunity, i) => (
-        <TabPanel key={i} value={value} index={1}>
+        <TabPanel key={i} value={value} index={i}>
           <Grid className="opportunities-grid" container spacing={2}>
             {opportunity.applications
               .filter((application) => application.status !== 'ACCEPTED')

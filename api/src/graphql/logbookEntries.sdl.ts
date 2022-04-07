@@ -5,46 +5,45 @@ export const schema = gql`
     student: Student!
     studentId: String!
     studentComments: String!
-    schoolSupervisorComments: String!
+    schoolSupervisorComments: String
     industrySupervisorComments: String!
-    industrySupervisor: IndustrySupervisor!
-    industrySupervisorId: String!
+    company: Company!
+    companyId: String!
+    # industrySupervisor: IndustrySupervisor!
+    # industrySupervisorId: String!
     schoolSupervisor: SchoolSupervisor!
     schoolSupervisorId: String!
   }
 
   type Query {
-    logbookEntries: [LogbookEntry!]! @requireAuth
-    logbookEntry(id: String!): LogbookEntry @requireAuth
+    logbookEntries(studentId: String): [LogbookEntry!]! @skipAuth
+    logbookEntry(id: String!): LogbookEntry @skipAuth
   }
 
   input CreateLogbookEntryInput {
-    date: DateTime!
     studentId: String!
     studentComments: String!
-    schoolSupervisorComments: String!
+    schoolSupervisorComments: String
     industrySupervisorComments: String!
-    industrySupervisorId: String!
-    schoolSupervisorId: String!
+    companyId: String!
+    schoolSupervisorId: String
   }
 
   input UpdateLogbookEntryInput {
-    date: DateTime
     studentId: String
     studentComments: String
     schoolSupervisorComments: String
     industrySupervisorComments: String
-    industrySupervisorId: String
+    companyId: String
     schoolSupervisorId: String
   }
 
   type Mutation {
-    createLogbookEntry(input: CreateLogbookEntryInput!): LogbookEntry!
-      @requireAuth
+    createLogbookEntry(input: CreateLogbookEntryInput!): LogbookEntry! @skipAuth
     updateLogbookEntry(
       id: String!
       input: UpdateLogbookEntryInput!
-    ): LogbookEntry! @requireAuth
-    deleteLogbookEntry(id: String!): LogbookEntry! @requireAuth
+    ): LogbookEntry! @skipAuth
+    deleteLogbookEntry(id: String!): LogbookEntry! @skipAuth
   }
 `

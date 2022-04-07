@@ -7,7 +7,7 @@ export const schema = gql`
     userId: String!
     company: Company!
     companyId: String!
-    logbookEntries: [LogbookEntry]!
+    # logbookEntries: [LogbookEntry]!
   }
 
   type Query {

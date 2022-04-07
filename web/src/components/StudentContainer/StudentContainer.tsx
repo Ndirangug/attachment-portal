@@ -1,11 +1,9 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { CellSuccessProps } from '@redwoodjs/web'
-import { CompanyProfileQuery } from 'types/graphql'
+import { StudentProfileQuery } from 'types/graphql'
+import StudentProfile from '../StudentProfile/StudentProfile'
+import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { useState } from 'react'
-import CompanyJobs from '../CompanyJobs/CompanyJobs'
-import CompanyProfile from '../CompanyProfile/CompanyProfile'
-import ReceivedApplications from '../ReceivedApplications/ReceivedApplications'
-import Placements from '../Placements/Placements'
+import StudentApplications from '../StudentApplications/StudentApplications'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -38,10 +36,10 @@ function a11yProps(index: number) {
   }
 }
 
-const CompanyContainer = ({
+const StudentContainer = ({
   profile,
 }: {
-  profile: CellSuccessProps<CompanyProfileQuery>
+  profile: CellSuccessProps<StudentProfileQuery>
 }) => {
   const [value, setValue] = useState(0)
 
@@ -58,25 +56,26 @@ const CompanyContainer = ({
           aria-label="basic tabs example"
         >
           <Tab label="Profile" {...a11yProps(0)} />
-          <Tab label="Opportunities" {...a11yProps(1)} />
+          <Tab label="Sent Applications" {...a11yProps(1)} />
           <Tab label="Received Applications" {...a11yProps(2)} />
-          <Tab label="Placed Students" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <CompanyProfile profile={profile} />
+        <StudentProfile profile={profile} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CompanyJobs profile={profile} />
+        <StudentApplications applications={profile.student.applications} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ReceivedApplications profile={profile} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Placements profile={profile} />
+        <StudentApplications applications={profile.student.applications} status="ACCEPTED"/>
       </TabPanel>
     </Box>
   )
+  // return (
+  //   <div>
+  //     <StudentProfile profile={profile} />
+  //   </div>
+  // )
 }
 
-export default CompanyContainer
+export default StudentContainer

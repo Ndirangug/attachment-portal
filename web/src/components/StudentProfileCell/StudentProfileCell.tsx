@@ -1,6 +1,6 @@
 import type { StudentProfileQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import StudentProfile from '../StudentProfile/StudentProfile'
+import StudentContainer from '../StudentContainer/StudentContainer'
 
 export const QUERY = gql`
   query StudentProfileQuery($id: String!) {
@@ -21,6 +21,37 @@ export const QUERY = gql`
         twitterUrl
         education
         experience
+        applications {
+          id
+          status
+          student {
+            id
+            firstName
+            lastName
+            course
+            linkedinUrl
+            githubUrl
+            twitterUrl
+            city
+            aboutMe
+            experience
+            education
+            skills
+          }
+          createdAt
+          Placement {
+            id
+            createdAt
+          }
+          opportunity {
+            id
+            title
+            company {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }
@@ -39,7 +70,7 @@ export const Success = ({
 }: CellSuccessProps<StudentProfileQuery>) => {
   return (
     <div>
-      <StudentProfile profile={studentProfile} />
+      <StudentContainer profile={studentProfile} />
     </div>
   )
 }

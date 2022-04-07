@@ -62,17 +62,18 @@ model Company {
   userId              String               @unique @db.ObjectId
   industrySupervisors IndustrySupervisor[]
   opportunities       Opportunity[]
+  logbookEntries      LogbookEntry[]
 }
 
 model IndustrySupervisor {
-  id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  firstName      String
-  lastName       String
-  user           User           @relation(fields: [userId], references: [id])
-  userId         String         @db.ObjectId
-  company        Company        @relation(fields: [companyId], references: [id])
-  companyId      String         @db.ObjectId
-  logbookEntries LogbookEntry[]
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @db.ObjectId
+  // logbookEntries LogbookEntry[]
 }
 
 model SchoolSupervisor {
@@ -127,15 +128,17 @@ model Placement {
 }
 
 model LogbookEntry {
-  id                         String             @id @default(auto()) @map("_id") @db.ObjectId
-  date                       DateTime           @default(now())
-  student                    Student            @relation(fields: [studentId], references: [id])
-  studentId                  String             @db.ObjectId
+  id                         String           @id @default(auto()) @map("_id") @db.ObjectId
+  date                       DateTime         @default(now())
+  student                    Student          @relation(fields: [studentId], references: [id])
+  studentId                  String           @db.ObjectId
   studentComments            String
   schoolSupervisorComments   String
   industrySupervisorComments String
-  industrySupervisor         IndustrySupervisor @relation(fields: [industrySupervisorId], references: [id])
-  industrySupervisorId       String             @db.ObjectId
-  schoolSupervisor           SchoolSupervisor   @relation(fields: [schoolSupervisorId], references: [id])
-  schoolSupervisorId         String             @db.ObjectId
+  company                    Company          @relation(fields: [companyId], references: [id])
+  companyId                  String           @db.ObjectId
+  // industrySupervisor         IndustrySupervisor @relation(fields: [industrySupervisorId], references: [id])
+  // industrySupervisorId       String             @db.ObjectId
+  schoolSupervisor           SchoolSupervisor @relation(fields: [schoolSupervisorId], references: [id])
+  schoolSupervisorId         String           @db.ObjectId
 }

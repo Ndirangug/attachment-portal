@@ -37,12 +37,14 @@ const StudentProfile = ({
   const [localStateSet, setLocalStateSet] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogTitle, setDialogTitle] = useState('Add Education')
+  const [loading, setLoading] = useState(false)
 
   const [createStudent, { createLoading, createError }] = useMutation(
     CREATE_STUDENT,
     {
       onCompleted: () => {
         toast.success('Student Profile created successfully!')
+        setLoading(false)
       },
     }
   )
@@ -52,11 +54,13 @@ const StudentProfile = ({
     {
       onCompleted: () => {
         toast.success('Profile updated successfully!')
+        setLoading(false)
       },
     }
   )
 
   const saveProfile = () => {
+    setLoading(true)
     if (profile.student) {
       updateStudent({
         variables: {
@@ -296,7 +300,7 @@ const StudentProfile = ({
 
         <div className="save-btn mt-10">
           <LoadingButton
-            loading={createLoading || updateloading}
+            loading={loading}
             //loading={true}
             variant="contained"
             className="green fixed inset-x-2/4  px-16 py-2 -translate-x-2/4 bottom-10 text-white"

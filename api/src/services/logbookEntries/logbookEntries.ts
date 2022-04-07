@@ -3,8 +3,12 @@ import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
-export const logbookEntries = () => {
-  return db.logbookEntry.findMany()
+export const logbookEntries = ({ studentId }: { studentId: string }) => {
+  return db.logbookEntry.findMany({
+    where: {
+      studentId: studentId,
+    },
+  })
 }
 
 export const logbookEntry = ({ id }: Prisma.LogbookEntryWhereUniqueInput) => {
@@ -45,11 +49,11 @@ export const deleteLogbookEntry = ({
 export const LogbookEntry = {
   student: (_obj, { root }: ResolverArgs<ReturnType<typeof logbookEntry>>) =>
     db.logbookEntry.findUnique({ where: { id: root.id } }).student(),
-  industrySupervisor: (
+  company: (
     _obj,
     { root }: ResolverArgs<ReturnType<typeof logbookEntry>>
   ) =>
-    db.logbookEntry.findUnique({ where: { id: root.id } }).industrySupervisor(),
+    db.logbookEntry.findUnique({ where: { id: root.id } }).company(),
   schoolSupervisor: (
     _obj,
     { root }: ResolverArgs<ReturnType<typeof logbookEntry>>
