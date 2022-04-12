@@ -20,6 +20,8 @@ interface LogbookProps {
   isSchoolSupervisor: boolean
   todaysEntry: LogbookEntry
   setTodaysEntry: (LogbookEntry) => void
+  todaysEntrySet: boolean
+  setTodaysEntrySet: (boolean) => void
 }
 
 const Logbook = ({
@@ -29,9 +31,14 @@ const Logbook = ({
   setTodaysEntry,
   isSchoolSupervisor,
   setTodaysEntryExists,
+  todaysEntrySet,
+  setTodaysEntrySet,
 }: LogbookProps) => {
   const [logbookEntries, setLogbookEntries] = useState<LogbookEntry[]>([])
   const [count, setCount] = useState(0)
+
+  // console.log('todays entry', todaysEntry)
+  console.log('logbook rerednered,', todaysEntry)
 
   const updateLogBookEntries = (logbookEntries: LogbookEntry[]) => {
     setLogbookEntries(logbookEntries)
@@ -41,10 +48,16 @@ const Logbook = ({
         entry.date.substring(0, 10) ===
         new Date().toISOString().substring(0, 10)
     )
+
     setTodaysEntryExists(todaysEntryExists)
 
-    todaysEntryExists &&
+    // setTodaysEntry(logbookEntries[logbookEntries.length - 1])
+    const updateTodaysEntry = () => {
       setTodaysEntry(logbookEntries[logbookEntries.length - 1])
+      setTodaysEntrySet(true)
+    }
+
+    todaysEntryExists && !todaysEntrySet && updateTodaysEntry()
   }
 
   return (
@@ -67,7 +80,7 @@ const Logbook = ({
             label="Today's comments"
             fullWidth
             variant="standard"
-            value={
+            defaultValue={
               isStudent
                 ? todaysEntry.studentComments
                 : todaysEntry.industrySupervisorComments
@@ -77,15 +90,13 @@ const Logbook = ({
               isStudent
                 ? setTodaysEntry({
                     // ...todaysEntry,
-
+                    ...todaysEntry,
                     studentComments: event.target.value,
                   })
                 : setTodaysEntry({
                     ...todaysEntry,
                     industrySupervisorComments: event.target.value,
-                })
-
-              
+                  })
             }}
           />
         </div>

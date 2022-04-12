@@ -64,13 +64,13 @@ export const QUERY = gql`
     }
   }
 `
-export const beforeQuery = (props) => {
-  return {
-    variables: props,
-    fetchPolicy: 'cache-and-network',
-    pollInterval: 2500,
-  }
-}
+// export const beforeQuery = (props) => {
+//   return {
+//     variables: props,
+//     fetchPolicy: 'cache-and-network',
+//     pollInterval: 2500,
+//   }
+// }
 
 export const Loading = () => <div>Loading...</div>
 

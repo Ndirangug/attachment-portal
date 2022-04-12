@@ -16,7 +16,7 @@ import {
   Slide,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Close } from '@mui/icons-material'
 import Logbook from '../Logbook/Logbook'
 import { Application } from 'types/graphql'
@@ -56,6 +56,9 @@ const LogbookDialog = ({
     studentComments: '',
     industrySupervisorComments: '',
   })
+  const [todaysEntrySet, setTodaysEntrySet] = useState(false)
+
+  console.log('logbook dialog rerednered,', todaysEntry)
 
   const [createEntry, { createLoading, createError }] = useMutation(
     CREATE_LOGBOOK_ENTRY,
@@ -91,9 +94,16 @@ const LogbookDialog = ({
     }
   )
 
+  useEffect(() => {
+    //console.log("today's entry chnaged", todaysEntry)
+    //console.log("logbook dialog rerednered," todaysEntry)
+  }, [todaysEntry])
+
   const saveChanges = () => {
-    console.log('save changes')
+    // console.log('save changes')
     setLoading(true)
+
+    console.log('todays entry on save', todaysEntry) 
 
     if (todaysEntryExists) {
       console.log('todays date exists ')
@@ -161,6 +171,8 @@ const LogbookDialog = ({
           setTodaysEntryExists={setTodaysEntryExists}
           todaysEntry={todaysEntry}
           setTodaysEntry={setTodaysEntry}
+          todaysEntrySet={todaysEntrySet}
+          setTodaysEntrySet={setTodaysEntrySet}
           // studentComments={studentComments}
           // setStudentComments={setStudentComments}
           // supervisorComments={superisorComments}

@@ -15,8 +15,9 @@ import LogbookDialog from '../LogbookDialog/LogbookDialog'
 const StudentOnAttachmentCard = ({ placement }: { placement: Placement }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
 
-  console.log('studnet on attachent')
-  console.log(placement)
+  // console.log('studnet on attachent')
+  // console.log(placement)
+  console.log("student on attachment card rendered")
 
   const toggleDialogOpen = () => {
     setDialogOpen(!dialogOpen)
