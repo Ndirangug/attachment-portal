@@ -6,16 +6,26 @@ import SchoolSupervisorCell from 'src/components/SchoolSupervisorCell/SchoolSupe
 import { useAuth } from '@redwoodjs/auth'
 import { useState } from 'react'
 import PlacedStudentsSchoolView from 'src/components/PlacedStudentsSchoolView/PlacedStudentsSchoolView'
+import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 
 const SchoolSupervisorPage = () => {
-  const { currentUser } = useAuth()
+  const { currentUser, hasRole, userMetadata, logOut } = useAuth()
   const [schoolSupervisor, setSchoolSupervisor] = useState<User>(null)
   const [loading, setLoading] = useState(true)
+
+  if (!hasRole('SCHOOL_SUPERVISOR')) {
+    console.log(`${currentUser.roles} can't login as SCHOOL_SUPERVISOR`)
+    logOut()
+    //toast.warn('You do not have permission to view this page.')
+    toast.error(
+      `You(${currentUser.roles}) do not have permission to view this page.`
+    )
+  }
 
   return (
     <>
       <MetaTags title="SchoolSupervisor" description="SchoolSupervisor page" />
-
+      <Toaster />
       <PageHeader>
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-white text-3xl">School Supervisor</h1>

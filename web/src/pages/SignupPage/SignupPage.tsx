@@ -68,6 +68,12 @@ const SignupPage = () => {
 
       <main className="rw-main">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+        <h6 className="capitalize font-semibold mx-auto text-center mt-16">
+          {redirectTo == null || redirectTo == undefined
+            ? ''
+            : redirectTo.replace('-', ' ').replace('/', '')}
+          Sign Up
+        </h6>
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
