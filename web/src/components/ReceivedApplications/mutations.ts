@@ -27,10 +27,19 @@ export const UPDATE_APPLICATION = gql`
       status
       student {
         firstName
+        lastName
+        user {
+          id
+          email
+        }
       }
       opportunity {
         id
         title
+        company{
+          id
+          name
+        }
       }
     }
   }

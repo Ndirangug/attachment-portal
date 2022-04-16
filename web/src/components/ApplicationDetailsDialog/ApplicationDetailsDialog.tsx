@@ -18,6 +18,7 @@ import {
   UPDATE_APPLICATION,
 } from '../ReceivedApplications/mutations'
 import { useState } from 'react'
+import { sendEmail } from 'src/lib/email'
 
 interface ApplicationDetailsDialogProps {
   isOpen: boolean
@@ -39,6 +40,7 @@ const ApplicationDetailsDialog = ({
       onCompleted: () => {
         setAcceptLoading(false)
         toast.success('Candidate placed successfully!')
+
         handleClose()
       },
       onError: (error) => {
@@ -56,6 +58,7 @@ const ApplicationDetailsDialog = ({
       onCompleted: () => {
         setRejectLoading(false)
         toast.success('Application status changed successfully!')
+
         handleClose()
       },
       onError: (error) => {
@@ -67,27 +70,47 @@ const ApplicationDetailsDialog = ({
     }
   )
 
-  const acceptApplication = () => {
+  const acceptApplication = async () => {
     console.log('acceptApplication')
     setAcceptLoading(true)
     createPlacement({ variables: { applicationId: application.id } })
-      setAcceptLoading(true)
-    updateApplication({
+    setAcceptLoading(true)
+
+    const result = await updateApplication({
       variables: {
         applicationId: application.id,
         input: { status: 'ACCEPTED' },
       },
     })
+    console.log('application result', result)
+    sendEmail(
+      `Congratulions! You have been accepted to the position of ${result.data.updateApplication.opportunity.title} intern at ${result.data.updateApplication.opportunity.company.name}`,
+      result.data.updateApplication.student.user.email,
+      '',
+      `You application to ${result.data.updateApplication.opportunity.company.name}`,
+      `${result.data.updateApplication.student.firstName}  ${result.data.updateApplication.student.lastName}`
+    )
   }
-  const rejectApplication = () => {
+
+  const rejectApplication = async () => {
     console.log('rejectApplication')
-      setRejectLoading(true)
-    updateApplication({
+    setRejectLoading(true)
+
+    const result = await updateApplication({
       variables: {
         applicationId: application.id,
         input: { status: 'REJECTED' },
       },
     })
+
+    console.log('application result', result)
+    sendEmail(
+      `Unfortunately we couln't move forward with your application to position of ${result.data.updateApplication.opportunity.title} intern at ${result.data.updateApplication.opportunity.company.name}`,
+      result.data.updateApplication.student.user.email,
+      'no-reply',
+      `You application to ${result.data.updateApplication.opportunity.company.name}`,
+      `${result.data.updateApplication.student.firstName}  ${result.data.updateApplication.student.lastName}`
+    )
   }
 
   return (
