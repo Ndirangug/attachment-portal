@@ -17,7 +17,8 @@ const Routes = () => {
         <Route path="/industry-supervisor" page={IndustrySupervisorPage} name="industrySupervisor" />
         <Route path="/recruiter" page={RecruiterPage} name="recruiter" />
         <Route path="/student-profile" page={StudentProfilePage} name="studentProfile" />
-        <Route path="/opportunities" page={OpportunitiesPage} name="opportunities" />
+        <Route path="/" page={OpportunitiesPage} name="opportunities" />
+        {/* <Route path="/opportunities" page={OpportunitiesPage} name="opportunities" /> */}
       </Private>
 
       <Route path="/about" page={AboutPage} name="about" />

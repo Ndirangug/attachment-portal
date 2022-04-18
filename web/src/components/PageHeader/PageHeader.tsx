@@ -24,7 +24,7 @@ const PageHeader = ({ children }) => {
           </Link>
           <Link to="/recruiter">Recruiters</Link>
           <Link to="/school-supervisor">School Supervisor</Link>
-          <Link to="/opportunities">Jobs</Link>
+          <Link to="/">opportunities</Link>
         </div>
         <div className="content mt-10">{children}</div>
       </div>
