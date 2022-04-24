@@ -44,6 +44,7 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data) => {
+    console.log(`signup recryitwr ${role}`)
     const response = await signUp({ ...data, role })
 
     if (response.message) {

@@ -10,8 +10,8 @@ export const setRole = (redirectTo): Role => {
       break
     case '/school-supervisor':
       return 'SCHOOL_SUPERVISOR'
-    case '/recuiter':
-      return 'RECRUITER'
+    case '/recruiter':
+      return 'INDUSTRY_SUPERVISOR'
       break
     default:
       return 'STUDENT'
