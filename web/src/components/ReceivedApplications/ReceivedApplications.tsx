@@ -1,6 +1,6 @@
 import { CellSuccessProps } from '@redwoodjs/web'
 import { CompanyProfileQuery } from 'types/graphql'
-import { Box, Tab, Tabs, Typography, Grid } from '@mui/material'
+import { Box, Tab, Tabs, Typography, Grid, Badge } from '@mui/material'
 import { useState } from 'react'
 import CompanyJobs from '../CompanyJobs/CompanyJobs'
 import CompanyProfile from '../CompanyProfile/CompanyProfile'
@@ -59,9 +59,26 @@ const ReceivedApplications = ({
           scrollButtons
           allowScrollButtonsMobile
         >
-          {profile.company.opportunities.map((opportunity, i) => (
-            <Tab key={i} label={opportunity.title} {...a11yProps(i)} />
-          ))}
+          {profile.company.opportunities.map((opportunity, i) => {
+            const pendingApplications = opportunity.applications.filter(
+              (application) => application.status === 'PENDING'
+            )
+
+            return (
+              <Tab
+                key={i}
+                label={
+                  <Badge
+                    badgeContent={pendingApplications.length}
+                    color="primary"
+                  >
+                    {opportunity.title}
+                  </Badge>
+                }
+                {...a11yProps(i)}
+              />
+            )
+          })}
         </Tabs>
       </Box>
 
@@ -81,15 +98,6 @@ const ReceivedApplications = ({
           </Grid>
         </TabPanel>
       ))}
-      {/* <TabPanel value={value} index={0}>
-        <CompanyProfile profile={profile} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CompanyJobs profile={profile} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ReceivedApplications profile={profile} />
-      </TabPanel> */}
     </Box>
   )
 }
