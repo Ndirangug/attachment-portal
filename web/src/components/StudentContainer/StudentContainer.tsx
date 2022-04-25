@@ -57,7 +57,8 @@ const StudentContainer = ({
         >
           <Tab label="Profile" {...a11yProps(0)} />
           <Tab label="Sent Applications" {...a11yProps(1)} />
-          <Tab label="Received Applications" {...a11yProps(2)} />
+          <Tab label="Accepted Applications" {...a11yProps(2)} />
+          <Tab label="Rejected Applications" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -67,7 +68,16 @@ const StudentContainer = ({
         <StudentApplications applications={profile.student.applications} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <StudentApplications applications={profile.student.applications} status="ACCEPTED"/>
+        <StudentApplications
+          applications={profile.student.applications}
+          status="ACCEPTED"
+        />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <StudentApplications
+          applications={profile.student.applications}
+          status="REJECTED"
+        />
       </TabPanel>
     </Box>
   )

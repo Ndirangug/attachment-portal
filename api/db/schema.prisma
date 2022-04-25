@@ -98,6 +98,7 @@ model Opportunity {
   skillsRequired   String[]
   skillsPrefferred String[]
   industry         String
+  open             Boolean
   company          Company       @relation(fields: [companyId], references: [id])
   companyId        String        @db.ObjectId
   applications     Application[]
@@ -109,7 +110,7 @@ model Application {
   createdAt     DateTime          @default(now())
   student       Student           @relation(fields: [studentId], references: [id])
   studentId     String            @db.ObjectId
-  opportunity   Opportunity       @relation(fields: [opportunityId], references: [id])
+  opportunity   Opportunity?       @relation(fields: [opportunityId], references: [id], onDelete: Cascade )
   opportunityId String            @db.ObjectId
   Placement     Placement?
 }

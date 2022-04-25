@@ -7,15 +7,18 @@ interface OpportunitiesArgs {
   category: string
   location: string
   title: string
+  open: boolean
 }
 
 export const opportunities = ({
   category = '',
   location = '',
   title = '',
+  open = true,
 }: OpportunitiesArgs) => {
   return db.opportunity.findMany({
     where: {
+      open,
       OR: [
         { category: category },
         { location: location },
@@ -48,6 +51,7 @@ export const createOpportunity = ({
   return db.opportunity.create({
     data: {
       ...opportunity,
+      open: true,
       company: {
         connect: { id: companyId },
       },

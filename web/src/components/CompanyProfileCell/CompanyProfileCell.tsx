@@ -18,6 +18,7 @@ export const QUERY = gql`
         opportunities {
           id
           title
+          open
           compensation
           createdAt
           category
@@ -53,6 +54,7 @@ export const QUERY = gql`
             opportunity {
               id
               title
+              open
               company {
                 id
                 name

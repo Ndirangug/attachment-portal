@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
   Chip,
+  Box,
 } from '@mui/material'
 import { useState } from 'react'
 import LogbookDialog from '../LogbookDialog/LogbookDialog'
@@ -33,26 +34,35 @@ const StudentSideApplicationCard = ({
         application={application}
       />
 
-      <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea>
+      <Card>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'start',
+            alignItems: 'center',
+          }}
+        >
           <CardMedia
             component="img"
-            height="100"
-            image={`https://ui-avatars.com/api/?name=${application.student.firstName}+${application.student.lastName}&background=random&size=256`}
+            height="50"
+            image={`https://ui-avatars.com/api/?name=${application.opportunity.company.name}&background=random&size=50`}
             alt="green iguana"
           />
-          <CardContent>
+
+          <Box>
             <Typography gutterBottom variant="h5" component="div">
-              {application.student.firstName} {application.student.lastName}
+              {application.opportunity.title}
             </Typography>
             <Typography gutterBottom variant="body2" component="div">
-              {application.student.course}
+              {application.opportunity.company.name}
             </Typography>
             {/* <Typography variant="body2" color="text.secondary">
               {application.student.aboutMe.substring(0, 100)} ...
             </Typography> */}
-          </CardContent>
-        </CardActionArea>
+          </Box>
+        </Box>
+
         <CardActions>
           <Button size="small" color="primary" onClick={toggleDialogOpen}>
             OPEN LOGBOOK

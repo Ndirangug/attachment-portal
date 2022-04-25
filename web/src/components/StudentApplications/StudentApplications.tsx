@@ -12,9 +12,9 @@ const StudentApplications = ({
   status = '',
 }: StudentApplicationsProps) => {
   const filteredApplications =
-    status === 'ACCEPTED'
-      ? applications.filter((application) => application.status === 'ACCEPTED')
-      : applications.filter((application) => application.status !== 'ACCEPTED')
+    status === ''
+      ? applications
+      : applications.filter((application) => application.status === status)
 
   console.log('filteredApplications', filteredApplications)
 

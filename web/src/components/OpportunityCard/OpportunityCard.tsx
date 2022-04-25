@@ -4,6 +4,9 @@ import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import { Business, LocationOn, MonetizationOn } from '@mui/icons-material'
 import { ApplicationStatus } from 'types/graphql'
+import { UPDATE_OPPORTUNITY } from './mutations'
+import { useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 
 interface OpportunityCardProps {
   opportunity: Opportunity
@@ -19,12 +22,27 @@ const OpportunityCard = ({
   opportunity,
   company,
   isStudent = false,
-  deleteOpportunity,
+  // deleteOpportunity,
   edit,
   apply,
   studentId,
 }: OpportunityCardProps) => {
   const [loading, setLoading] = useState(false)
+
+
+
+  const [closeOpportunity, { closeLoading, closeError }] = useMutation(
+    UPDATE_OPPORTUNITY,
+    {
+      onCompleted: () => {
+        toast.success('opportunity status changed successfully!')
+      },
+      onError: (error) => {
+        console.log(error)
+        toast.error(error.message)
+      },
+    }
+  )
 
   return (
     <div>
@@ -67,7 +85,6 @@ const OpportunityCard = ({
                   <LoadingButton
                     loading={loading}
                     onClick={async () => {
-                    
                       setLoading(true)
                       const result = await apply({
                         variables: {
@@ -77,7 +94,6 @@ const OpportunityCard = ({
                         },
                       })
                       setLoading(false)
-
                     }}
                   >
                     Apply
@@ -85,8 +101,41 @@ const OpportunityCard = ({
                 </div>
               ) : (
                 <div className="recruiter-actions">
-                  <Button>Edit</Button>
-                  <Button>Delete</Button>
+                  {opportunity.open ? (
+                    <LoadingButton
+                      loading={loading}
+                      onClick={async () => {
+                        console.log('deleteOpportunity', closeOpportunity)
+                        setLoading(true)
+                        const result = await closeOpportunity({
+                          variables: {
+                            id: opportunity.id,
+                            opportunityInput: { open: false },
+                          },
+                        })
+                        setLoading(false)
+                      }}
+                    >
+                      Close Applications
+                    </LoadingButton>
+                  ) : (
+                    <LoadingButton
+                      loading={loading}
+                      onClick={async () => {
+                        console.log('deleteOpportunity', closeOpportunity)
+                        setLoading(true)
+                        const result = await closeOpportunity({
+                          variables: {
+                            id: opportunity.id,
+                            opportunityInput: { open: true },
+                          },
+                        })
+                        setLoading(false)
+                      }}
+                    >
+                      Reopen Applications
+                    </LoadingButton>
+                  )}
                 </div>
               )}
             </div>

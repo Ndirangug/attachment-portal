@@ -15,6 +15,7 @@ export const schema = gql`
     company: Company!
     companyId: String!
     applications: [Application]!
+    open: Boolean!
   }
 
   type Query {
@@ -44,23 +45,24 @@ export const schema = gql`
     compensation: Int
     jobDescription: String
     category: String
-    requirements: [String]!
+    requirements: [String!]
     details: JSON
     location: String
-    skillsRequired: [String]!
-    skillsPrefferred: [String]!
+    skillsRequired: [String!]
+    skillsPrefferred: [String!]
     industry: String
+    open: Boolean
   }
 
   type Mutation {
     createOpportunity(
       opportunity: CreateOpportunityInput!
       companyId: String!
-    ): Opportunity! @requireAuth
+    ): Opportunity! @skipAuth
     updateOpportunity(
       id: String!
       input: UpdateOpportunityInput!
-    ): Opportunity! @requireAuth
-    deleteOpportunity(id: String!): Opportunity! @requireAuth
+    ): Opportunity! @skipAuth
+    deleteOpportunity(id: String!): Opportunity! @skipAuth
   }
 `

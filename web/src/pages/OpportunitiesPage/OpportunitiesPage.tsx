@@ -9,7 +9,7 @@ import { OpportunitiesQuery } from 'types/graphql'
 import OpportunitiesListing from 'src/components/OpportunitiesListing/OpportunitiesListing'
 import { useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/dist/toast'
-import { CREATE_APPLICATION } from './mutations'
+import { CREATE_APPLICATION, DELETE_OPPORTUNITY } from './mutations'
 
 const OpportunitiesPage = () => {
   const [opportunities, setOpportunities] =
@@ -47,6 +47,9 @@ const OpportunitiesPage = () => {
       },
     }
   )
+
+
+
 
   return (
     <>
@@ -110,7 +113,7 @@ const OpportunitiesPage = () => {
 
           <OpportunitiesListing
             opportunities={opportunities}
-            // deleteOpportunity={deleteOpportunity}
+            ///deleteOpportunity={deleteOpportunity}
             // edit={edit}
             apply={createApplication}
           />
