@@ -69,12 +69,14 @@ const StudentContainer = ({
       </TabPanel>
       <TabPanel value={value} index={2}>
         <StudentApplications
+          key={'ACCEPTED'}
           applications={profile.student.applications}
           status="ACCEPTED"
         />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={3}>
         <StudentApplications
+          key={'REJECTED'}
           applications={profile.student.applications}
           status="REJECTED"
         />

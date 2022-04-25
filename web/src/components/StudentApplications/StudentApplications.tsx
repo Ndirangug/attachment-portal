@@ -16,14 +16,14 @@ const StudentApplications = ({
       ? applications
       : applications.filter((application) => application.status === status)
 
-  console.log('filteredApplications', filteredApplications)
+  console.log(`filteredApplications ${status}`, filteredApplications)
 
   return (
     <div>
       <Grid className="opportunities-grid" container spacing={2}>
         {filteredApplications.map((application, i) => (
-          <Grid item xs={12} sm={6} md={4} key={i}>
-            <StudentSideApplicationCard key={i} application={application} />
+          <Grid item xs={12} sm={12} md={6} key={i}>
+            <StudentSideApplicationCard  application={application} />
           </Grid>
         ))}
       </Grid>

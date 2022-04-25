@@ -34,7 +34,7 @@ const StudentSideApplicationCard = ({
         application={application}
       />
 
-      <Card>
+      <Card className="px-5 pt-5">
         <Box
           sx={{
             display: 'flex',
@@ -43,19 +43,20 @@ const StudentSideApplicationCard = ({
             alignItems: 'center',
           }}
         >
-          <CardMedia
+          <Box
             component="img"
-            height="50"
-            image={`https://ui-avatars.com/api/?name=${application.opportunity.company.name}&background=random&size=50`}
+            className="mr-4"
+            height="5em"
+            src={`https://ui-avatars.com/api/?name=${application.opportunity.company.name}&background=random&size=50`}
             alt="green iguana"
           />
 
           <Box>
-            <Typography gutterBottom variant="h5" component="div">
-              {application.opportunity.title}
+            <Typography gutterBottom variant="h6" component="div">
+              {application.opportunity.company.name}
             </Typography>
             <Typography gutterBottom variant="body2" component="div">
-              {application.opportunity.company.name}
+              {application.opportunity.title}
             </Typography>
             {/* <Typography variant="body2" color="text.secondary">
               {application.student.aboutMe.substring(0, 100)} ...
@@ -64,9 +65,13 @@ const StudentSideApplicationCard = ({
         </Box>
 
         <CardActions>
-          <Button size="small" color="primary" onClick={toggleDialogOpen}>
-            OPEN LOGBOOK
-          </Button>
+          {application.status === 'ACCEPTED' ? (
+            <Button size="small" color="primary" onClick={toggleDialogOpen}>
+              OPEN LOGBOOK
+            </Button>
+          ) : (
+            <Chip label={application.status}> </Chip>
+          )}
         </CardActions>
       </Card>
     </div>
