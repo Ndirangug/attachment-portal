@@ -2,6 +2,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { CellSuccessProps, useMutation, useQuery } from '@redwoodjs/web'
 import { OpportunitiesQuery } from 'types/graphql'
 import OpportunityCard from '../OpportunityCard/OpportunityCard'
+import { Router, Route, Link } from '@redwoodjs/router'
 
 interface OpportunitiesListinprops
   extends CellSuccessProps<OpportunitiesQuery> {
@@ -34,9 +35,23 @@ const OpportunitiesListing = ({
 
   if (loading) return 'Loading...'
 
+  if(!data.studentProfile.student){
+    console.log("no student profile yet")
+    return (
+    <p>You haven't created your student profile yet. Head to  <Link
+    to="/student-profile"
+    className="hover:text-green-600 focus:text-green-500 active:text-green-500"
+  >
+    student profile page
+  </Link> to create a profile then come back to http://localhost:8910 to view opportunities
+  </p> )
+  }
+
   return (
     <div>
       {opportunities.map((opportunity, i) => {
+
+
         return (
           <OpportunityCard
             key={i}

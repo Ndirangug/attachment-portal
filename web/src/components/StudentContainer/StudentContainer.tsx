@@ -64,10 +64,10 @@ const StudentContainer = ({
       <TabPanel value={value} index={0}>
         <StudentProfile profile={profile} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      {/* <TabPanel value={value} index={1}>
         <StudentApplications applications={profile.student.applications} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
+      </TabPanel> */}
+      {/* <TabPanel value={value} index={2}>
         <StudentApplications
           key={'ACCEPTED'}
           applications={profile.student.applications}
@@ -80,6 +80,36 @@ const StudentContainer = ({
           applications={profile.student.applications}
           status="REJECTED"
         />
+      </TabPanel> */}
+      <TabPanel value={value} index={1}>
+        {profile.student && profile.student.applications ? (
+          <StudentApplications
+            applications={profile.student.applications}
+
+          />
+        ) : (
+          <p>You havent made any applications yet</p>
+        )}
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        {profile.student && profile.student.applications ? (
+          <StudentApplications
+            applications={profile.student.applications}
+            status="ACCEPTED"
+          />
+        ) : (
+          <p>You havent made any applications yet</p>
+        )}
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        {profile.student && profile.student.applications ? (
+          <StudentApplications
+            applications={profile.student.applications}
+            status="REJECTED"
+          />
+        ) : (
+          <p>You havent made any applications yet</p>
+        )}
       </TabPanel>
     </Box>
   )
